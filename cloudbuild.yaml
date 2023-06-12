@@ -3,7 +3,7 @@ steps:
   entrypoint: mvn
   args: ['package','-Dmaven.test.skip=true']
 - name: gcr.io/cloud-builders/docker
-  #args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '.']
+  args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '.']
   args: ['push', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
 images: ['asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
 
