@@ -2,9 +2,11 @@ steps:
 - name: maven:3.3-jdk-8
   entrypoint: mvn
   args: ['package','-Dmaven.test.skip=true']
+  
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '.']
 images: ['asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
+
 - name: gcr.io/cloud-builders/docker
   args: ['push', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
 images: ['asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
