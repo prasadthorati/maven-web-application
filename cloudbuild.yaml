@@ -6,6 +6,7 @@
 steps:
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '--build-arg=JAR_FILE=target/maven-web-application', '.']
+  args: ['push', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
 images: ['asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
 
 #artifacts:
