@@ -11,7 +11,7 @@ steps:
     - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
     - '--build-arg=JAR_FILE=target/maven-web-application'
     - '.'
-  dir: 'maven-web-application/Dockerfile'  # Specify the correct build context path
+  dir: 'maven-web-application/'  # Specify the correct build context path
 - name: gcr.io/cloud-builders/docker
   args:
     - 'push'
