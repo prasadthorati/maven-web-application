@@ -7,19 +7,19 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/my-image'
+  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123'
   - '.'
   - '-f'
   - 'Dockerfile'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'tag'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/my-image'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/my-image:latest'
+  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123'
+  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:latest'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'push'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/my-image:latest'
+  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:latest'
 
 
 
