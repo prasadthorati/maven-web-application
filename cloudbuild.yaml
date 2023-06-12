@@ -4,20 +4,26 @@ steps:
   args: ['package','-Dmaven.test.skip=true']
 
 steps:
-- name: gcr.io/cloud-builders/docker
-  args:
-    - 'build'
-    - '-t'
-    - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
-    - '--build-arg=JAR_FILE=target/maven-web-application'
-    - '.'
-  dir: 'maven-web-application/'  # Specify the correct build context path
-- name: gcr.io/cloud-builders/docker
-  args:
-    - 'push'
-    - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
-images:
-- 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/demo123', '-f', 'maven-web-application/Dockerfile', '.']
+images: ['gcr.io/$PROJECT_ID/demo123']
+
+
+#steps:
+#- name: gcr.io/cloud-builders/docker
+#  args:
+#    - 'build'
+#    - '-t'
+#    - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
+#    - '--build-arg=JAR_FILE=target/maven-web-application'
+#    - '.'
+#  dir: 'maven-web-application/'  # Specify the correct build context path
+#- name: gcr.io/cloud-builders/docker
+#  args:
+#    - 'push'
+#    - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
+#images:
+#- 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
 
 #steps:
 #- name: gcr.io/cloud-builders/docker
