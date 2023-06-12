@@ -2,3 +2,16 @@
  - name: maven:3.3-jdk-8
    entrypoint: mvn
    args: ['package','-Dmaven.test.skip=true']
+
+steps:
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '--build-arg=JAR_FILE=target/maven-web-application', '.']
+images: ['asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
+
+#artifacts:
+#	  mavenArtifacts:
+#	  - repository: 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo'
+#		   path: 'app-path'
+#		   artifactId: 'build-artifact'
+#		   groupId: '123'
+#		   version: '1'
