@@ -19,7 +19,7 @@ steps:
   
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'SERVICE-NAME', '--image', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$SHORT_SHA', '--region', 'asia-south1']
+  args: ['run', 'deploy', 'maven-demo', '--image', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$SHORT_SHA', '--region', 'asia-south1']
 images:
 - asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$SHORT_SHA
 
