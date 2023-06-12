@@ -11,10 +11,7 @@ steps:
   - '.'
   - '-f'
   - 'Dockerfile'
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'tag'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$COMMIT_SHA'
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'push'
