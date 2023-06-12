@@ -5,7 +5,7 @@ steps:
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '-f', 'maven-web-application/Dockerfile', '.']
+  args: ['build', '-t', 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo', '.']
 images: ['asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo']
 
 
