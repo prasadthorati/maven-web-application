@@ -7,7 +7,7 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$COMMIT_SHA'
+  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$SHORT_SHA'
   - '.'
   - '-f'
   - 'Dockerfile'
@@ -15,7 +15,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'push'
-  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$COMMIT_SHA'
+  - 'asia-south1-docker.pkg.dev/grafana-monitoring-demo/demo-repo/demo123:$SHORT_SHA'
 
 
 
