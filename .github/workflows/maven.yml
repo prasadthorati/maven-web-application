@@ -28,5 +28,5 @@ jobs:
       run: |
         cp /home/runner/work/maven-web-application/maven-web-application/target/maven-web-application.war /opt
         ls /opt
-        ls /home
-        ls /home/runner/work/maven-web-application/maven-web-application/target
+        touch prasad
+        ls
