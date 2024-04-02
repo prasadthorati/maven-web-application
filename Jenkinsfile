@@ -1,75 +1,75 @@
-pipeline{
-
-agent any
-
-tools{
-maven 'maven3.8.2'
-
+pipeline {
+    agent any
+        environment {
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/prasadthorati/maven-web-application.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    // Configure Maven settings
+                    def mvnHome = tool 'maven'
+                    def mvnCmd = "${mvnHome}/bin/mvn"
+                    
+                    // Run Maven build
+                    sh "${mvnCmd} clean package"
+                    //sh "cp /var/lib/jenkins/workspace/project-task/target/*.war"
+                }
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                script {
+                    // Define Dockerfile location
+                    def dockerfilePath = './Dockerfile'
+                    
+                    // Build Docker image
+                    sh "sudo docker build -t gcr.io/gcp-demo-project-413710/project-tag:${env.BUILD_NUMBER} -f ${dockerfilePath} ."
+                    sh "pwd"
+                    sh "ls -lrt"
+                }
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                script {
+                    sh "sudo docker push gcr.io/gcp-demo-project-413710/project-tag:${env.BUILD_NUMBER}"
+                }
+            }
+        }
+                // Commented out stages
+        stage('SonarQube Analysis') {
+            steps {
+                    sh 'sudo mvn clean sonar:sonar'
+            }
+        }
+        stage('Deploy to GKE') {
+            steps {
+                script {
+                    sh "kubectl apply -f deployment.yaml"
+                }
+            }
+        }
+    }
+    post {
+        success {
+            // Send email on success
+            emailext to: 'prasadthorati972@gmail.com',
+                     subject: "Pipeline Build #${env.BUILD_NUMBER} succeeded",
+                     body: "Pipeline Build #${env.BUILD_NUMBER} succeeded. Build status: ${currentBuild.result}.",
+                     replyTo: 'prasadthorati972@gmail.com'
+        }
+        failure {
+            // Send email on failure
+            emailext to: 'prasadthorati972@gmail.com',
+                     subject: "Pipeline Build #${env.BUILD_NUMBER} failed",
+                     body: "Pipeline Build #${env.BUILD_NUMBER} failed. Build status: ${currentBuild.result}.",
+                     replyTo: 'prasadthorati972@gmail.com'
+        }
+    }
 }
-
-triggers{
-pollSCM('* * * * *')
-}
-
-options{
-timestamps()
-buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
-}
-
-stages{
-
-  stage('CheckOutCode'){
-    steps{
-    git branch: 'development', credentialsId: '957b543e-6f77-4cef-9aec-82e9b0230975', url: 'https://github.com/devopstrainingblr/maven-web-application-1.git'
-	
-	}
-  }
-  
-  stage('Build'){
-  steps{
-  sh  "mvn clean package"
-  }
-  }
-/*
- stage('ExecuteSonarQubeReport'){
-  steps{
-  sh  "mvn clean sonar:sonar"
-  }
-  }
-  
-  stage('UploadArtifactsIntoNexus'){
-  steps{
-  sh  "mvn clean deploy"
-  }
-  }
-  
-  stage('DeployAppIntoTomcat'){
-  steps{
-  sshagent(['bfe1b3c1-c29b-4a4d-b97a-c068b7748cd0']) {
-   sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@35.154.190.162:/opt/apache-tomcat-9.0.50/webapps/"    
-  }
-  }
-  }
-  */
-}//Stages Closing
-
-post{
-
- success{
- emailext to: 'devopstrainingblr@gmail.com,mithuntechnologies@yahoo.com',
-          subject: "Pipeline Build is over .. Build # is ..${env.BUILD_NUMBER} and Build status is.. ${currentBuild.result}.",
-          body: "Pipeline Build is over .. Build # is ..${env.BUILD_NUMBER} and Build status is.. ${currentBuild.result}.",
-          replyTo: 'devopstrainingblr@gmail.com'
- }
- 
- failure{
- emailext to: 'devopstrainingblr@gmail.com,mithuntechnologies@yahoo.com',
-          subject: "Pipeline Build is over .. Build # is ..${env.BUILD_NUMBER} and Build status is.. ${currentBuild.result}.",
-          body: "Pipeline Build is over .. Build # is ..${env.BUILD_NUMBER} and Build status is.. ${currentBuild.result}.",
-          replyTo: 'devopstrainingblr@gmail.com'
- }
- 
-}
-
-
-}//Pipeline closing
