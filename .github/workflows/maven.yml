@@ -46,12 +46,14 @@ jobs:
           push: true
           tags: larasai/maven-web-app:v1
 
-      - name: Configure gcloud CLI
-        uses: google-github-actions/setup-gcloud@v0.4.0
-        with:
-          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
-          export_default_credentials: true
+      - name: Authenticate with Google Cloud
+        run: |
+          echo "${{ secrets.GCLOUD_SA_KEY }}" | base64 --decode > /tmp/gcloud.json
+          gcloud auth activate-service-account --key-file=/tmp/gcloud.json
+
+      - name: Configure Docker for Google Artifact Registry
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and push Docker image to Google Artifact Registry
         run: |
