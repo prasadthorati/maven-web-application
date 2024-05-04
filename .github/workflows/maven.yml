@@ -44,7 +44,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: larasai/maven-web-app::v1
+          tags: larasai/maven-web-app:v1
 
   deploy:
     runs-on: ubuntu-latest
