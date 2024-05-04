@@ -50,8 +50,8 @@ jobs:
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev 
           echo "successflly authenticated"
-          docker tag larasai/maven-web-app:v1 us-central1-docker.pkg.dev/${{ secrets.GCLOUD_PROJECT_ID }}/demo-app/maven-web-app:v1
-          docker push us-central1-docker.pkg.dev/${{ secrets.GCLOUD_PROJECT_ID }}/demo-app/maven-web-app:v1
+          docker tag larasai/maven-web-app:v1 us-central1-docker.pkg.dev/stone-trees-422304-p7/demo-app/maven-web-app:v1
+          docker push us-central1-docker.pkg.dev/stone-trees-422304-p7/demo-app/maven-web-app:v1
 
   deploy:
     runs-on: ubuntu-latest
