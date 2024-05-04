@@ -47,7 +47,7 @@ jobs:
           tags: larasai/maven-web-app:v1
 
       - name: install the gcloud cli
-        uses: google-github-actions/setup-gcloud@v0
+        uses: google-github-actions/setup-gcloud@v2
         with:
          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
@@ -56,11 +56,8 @@ jobs:
       - name: Build and push Docker image to Google Artifact Registry
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev 
-          echo "successflly authenticated"
           docker pull larasai/maven-web-app:v1
-          docker images
           docker tag larasai/maven-web-app:v1 us-central1-docker.pkg.dev/stone-trees-422304-p7/demo-app/maven-web-app:v1
-          docker images
           docker push us-central1-docker.pkg.dev/stone-trees-422304-p7/demo-app/maven-web-app:v1
 
   deploy:
@@ -74,10 +71,10 @@ jobs:
           path: /opt
 
       - name: Deploy to Cloud Run
-        uses: GoogleCloudPlatform/github-actions/cloud-run@main
+        uses: google-github-actions/deploy-cloudrun@v2
         with:
           service_name: maven-web-app
-          image: us-central1-docker.pkg.dev/${{ secrets.GCLOUD_PROJECT_ID }}/demo-app/maven-web-app:v1
+          image: us-central1-docker.pkg.dev/stone-trees-422304-p7/demo-app/maven-web-app:v1
           platform: managed
           region: us-central1
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
