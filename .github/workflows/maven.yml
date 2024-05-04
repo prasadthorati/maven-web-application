@@ -70,6 +70,11 @@ jobs:
           name: maven-web-application
           path: /opt
 
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          credentials: ${{ secrets.GCLOUD_SA_KEY }}
+
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
