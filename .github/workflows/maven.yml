@@ -45,20 +45,13 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: larasai/maven-web-app:v1
-
-      - name: Authenticate with Google Cloud
-        run: |
-          echo "${{ secrets.GCLOUD_SA_KEY }}" | base64 --decode > /tmp/gcloud.json
-          gcloud auth activate-service-account --key-file=/tmp/gcloud.json
-
-      - name: Configure Docker for Google Artifact Registry
-        run: |
-          gcloud auth configure-docker us-central1-docker.pkg.dev
+          
+      - name: Tag Docker image for Google Artifact Registry
+        run: docker tag larasai/maven-web-app:v1 us-central1-docker.pkg.dev/${{ secrets.GCLOUD_PROJECT_ID }}/demo-app/maven-web-app:v1
 
       - name: Build and push Docker image to Google Artifact Registry
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
-          docker tag larasai/maven-web-app:v1 us-central1-docker.pkg.dev/${{ secrets.GCLOUD_PROJECT_ID }}/demo-app/maven-web-app:v1
           docker push us-central1-docker.pkg.dev/${{ secrets.GCLOUD_PROJECT_ID }}/demo-app/maven-web-app:v1
 
   deploy:
