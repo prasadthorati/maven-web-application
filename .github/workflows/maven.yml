@@ -69,3 +69,4 @@ jobs:
           region: us-central1
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
           service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
+          flags: '--allow-unauthenticated'
