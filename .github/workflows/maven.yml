@@ -75,6 +75,8 @@ jobs:
         env:
           GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
         run: |
+          gcloud components install kubectl
+          kubectl version --client
           gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1
           sed -i "s/GOOGLE_PROJECT/stone-trees-422304-p7/g" resources.yaml
           kubectl apply -f resources.yaml
