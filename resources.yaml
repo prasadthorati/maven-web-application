@@ -29,4 +29,3 @@ spec:
   ports:
     - port: 8080  # Port on the service
       targetPort: 8080  # Port on the pods
-      nodePort: 30000  # Port exposed on the nodes (change this to your desired port number)
